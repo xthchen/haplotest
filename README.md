@@ -1,0 +1,2 @@
+# haplotest
+This R package is used for haplotype based selection testing in the context of evolve and resequence. The main function haplotest() takes as input temporal haplotype or allele frequencies, and gives p-value of selection testing as output. Haplotype combination methods can be used if the input contains many haplotypes. Post-hoc test in the form of testing for the number of selected haplotypes and pair-wise tests are also available in this package.
