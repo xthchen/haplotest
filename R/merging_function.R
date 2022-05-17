@@ -5,7 +5,7 @@
 #' @param r Numeric, parameter for Vovk's methods.
 #' @references Vovk, V., Wang., R., (2018), Combining p-values via averaging, Biometrika 107(4): 791–808.
 #' @return Numeric, a single pvalue.
-#'
+#' @seealso [haplotest()]
 #' @export
 
 merging_function = function(pval, r){

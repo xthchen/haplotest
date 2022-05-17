@@ -32,3 +32,6 @@ A number specifying the number of selected haplotypes.
 \description{
 This is the post-hoc test for testing for the number of selected haplotypes. The test should only be performed if haplotype based test have shown evidence of selection.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

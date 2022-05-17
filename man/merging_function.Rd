@@ -20,3 +20,6 @@ Multiple testing combination method based on Vovk et al. 2018.
 \references{
 Vovk, V., Wang., R., (2018), Combining p-values via averaging, Biometrika 107(4): 791–808.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

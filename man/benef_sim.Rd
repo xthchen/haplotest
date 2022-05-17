@@ -35,3 +35,6 @@ A list, with the first item being a numeric vector of selective strength for all
 \description{
 Generate the position of benefitial allele and selection strength.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

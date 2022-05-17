@@ -15,3 +15,6 @@ Numeric matrix, set of non-overlapping haplotype block location, with the first 
 \description{
 The algorithm selects non-overlapping haplotype block from the filtered haplotype block candidate output from the MIG algorithm, by favouring larger haplotype blocks first.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

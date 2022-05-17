@@ -8,7 +8,7 @@
 #' @param p_combine_method Factor, method of pvalue combination, can be "omnibus" (Futschik, A. et al. 2019), "harmonic" (Wilson, D.J. (2019)), "vovk" (Vovk, V. et al. 2018), "bonferroni", "BH" (Benjamini & Hochberg 1995).
 #' @param seed setting seed of the run
 #' @return A number specifying the number of selected haplotypes.
-#'
+#' @seealso [haplotest()]
 #' @export
 
 

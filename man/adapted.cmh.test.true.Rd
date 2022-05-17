@@ -24,3 +24,6 @@ This function performs the adapted CMH test (Spitzer et al. 2019), but in cases 
 \references{
 Spitzer, K., Pelizzola, M., Futschik, A., (2019), Modifying the Chi-square and the CMH test for population genetic inference: adapting to over-dispersion, The Annals of Applied Statistics 14(1): 202-220.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

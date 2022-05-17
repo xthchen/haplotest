@@ -40,3 +40,6 @@ Gabriel, S. B., Schaffner, S. F., Nguyen, H., Moore, J. M., Roy, J., Blumenstiel
 
 Taliun, D., Gamper, J., Pattaro, C., (2014), Efficient haplotype block recognition of very long and dense genetic sequences, BMC bioinformatics 15: 10.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

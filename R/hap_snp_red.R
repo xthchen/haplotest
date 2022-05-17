@@ -5,7 +5,7 @@
 #' @param frequency_matrix Numeric matrix, with each i,j element being the frequency of haplotype i at sequenced time point j.
 #' 
 #' @return A reduced haplotype frequency matrix (if haplotypes are combined due to reduced SNPs). Remains unchanged from the input frequency_matrix if no combination of haplotypes occurred.
-#'
+#' @seealso [haplotest()]
 #' @export
 
 hap_snp_red = function(red_snp, frequency_matrix){

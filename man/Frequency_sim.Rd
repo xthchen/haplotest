@@ -46,3 +46,6 @@ Returns a list. The first item is the haplotype frequency matrix with row being 
 \description{
 Simulation of haplotype frequencies over time using a multinomial distribution. Simulations can be run with or without replicated populations, and for constant or changing selection over time. Frequencies are recorded at time points provided in the input data.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

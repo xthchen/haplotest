@@ -53,6 +53,40 @@ A numeric vector of p-values from the test after multiple testing corrections.
 \description{
 Selection can be tested using either haplotype or allele frequencies. For haplotype frequencies, 3 methods are available, basic, haplotype filtering using SNPs, haplotype block based. All tests uses the adapted chi-squared test to correct for variance during testing, dependent on whether the frequencies are estimated. For haplotype filtering and haplotype block based method, both haplotype and allele frequencies, as well as the haplotype structure will be required.
 }
+\examples{
+#We show here examples from simulated data to p-value results of a haplotype based test.
+#The data simulation part can be ignored if a real data set is used.
+##########Known frequency simulated data using basic haplotype based test##########
+
+#Simulate haplotype structure with 500 SNPs and 5 haplotypes:
+hap_struc = Haplotype_sim(nsnp = 500,nhap = 5)
+
+#Simulation of selected SNP, with 1 selected SNP private to 1 haplotype, 1 population and 0.05 selective strength:
+SNP_sel = benef_sim(haplotype = hap_struc, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 1)
+
+#Simulation of haplotype trajectory, 60 generations, sequenced at every 10 timepoints, Ne of 500:
+hap_freq = Frequency_sim(haplotype, t = 6, tdelta = 10, benef_sim = SNP_sel,Ne = 500)[[1]]
+
+#Computation of p-value using basic haplotype based test and omnibus p-value combination method:
+pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq, deltat = 10, Ne = 500, test_type = "haplotype", test_method = "base", p_combine_method = "omnibus", freq_est = "known")
+
+##########Known frequency simulated data using HapSNP##########
+
+#In addition to the previous simulations, we need to compute the allele frequencies:
+allele_freq = hap_struc \%*\% hap_freq
+
+#Computation of p-value using HapSNP and omnibus p-value combination method:
+pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq, allele_frequency = allele_freq, deltat = 10, Ne = 500, test_type = "haplotype", test_method = "hap_filt", p_combine_method = "omnibus", freq_est = "known")
+
+##########Estimated frequency simulated data using basic haplotype based test##########
+
+#Simulation of noisy haplotype frequencies with mean samplesize 80:
+hap_freq_est = hap_err_sim(hap_freq, 80)
+
+#Computation of p-value using basic haplotype based test and omnibus p-value combination method:
+pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq_est[[1]], coverage_matrix = hap_freq_est[[2]], deltat = 10, Ne = 500, test_type = "haplotype", test_method = "base", p_combine_method = "omnibus", freq_est = "est")
+
+}
 \references{
 Spitzer, K., Pelizzola, M., Futschik, A., (2019), Modifying the Chi-square and the CMH test for population genetic inference: adapting to over-dispersion, The Annals of Applied Statistics 14(1): 202-220.
 

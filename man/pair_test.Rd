@@ -21,3 +21,6 @@ A numeric vector of p-values from all the pairwise test after B&H corrections. T
 \description{
 Pairwise post hoc test. Should only be used if haplotype based test have shown to be significant.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

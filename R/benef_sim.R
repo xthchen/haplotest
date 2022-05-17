@@ -9,6 +9,7 @@
 #' @param repli Numeric, number of replicated populations.
 #' @param diff_sel_str Logical statement, given there are replicates, whether to allow difference in selection strength between replicates.
 #' @return A list, with the first item being a numeric vector of selective strength for all SNPs, the second item being the position of benefitial alleles, the third item being the number of selected haplotypes.
+#' @seealso [haplotest()]
 #' @export
 
 benef_sim = function(haplotype, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 0, repli = 1, 

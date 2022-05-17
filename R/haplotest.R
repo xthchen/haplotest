@@ -1,5 +1,5 @@
 #' Testing for selection using temporal haplotype/allele frequencies.
-#' 
+#'
 #' Selection can be tested using either haplotype or allele frequencies. For haplotype frequencies, 3 methods are available, basic, haplotype filtering using SNPs, haplotype block based. All tests uses the adapted chi-squared test to correct for variance during testing, dependent on whether the frequencies are estimated. For haplotype filtering and haplotype block based method, both haplotype and allele frequencies, as well as the haplotype structure will be required.
 #' @param haplotype Binary numeric matrix containing information of haplotype structure. The columns corresponds to the haplotypes and the rows to the SNPs.
 #' @param haplotype_frequency Numeric matrix, with each i,j element being the frequency of haplotype i at sequenced time point j.
@@ -21,6 +21,39 @@
 #' @references Vovk, V., Wang., R., (2018), Combining p-values via averaging, Biometrika 107(4): 791–808.
 #' @return A numeric vector of p-values from the test after multiple testing corrections.
 #'
+#' @examples
+#' #We show here examples from simulated data to p-value results of a haplotype based test.
+#' #The data simulation part can be ignored if a real data set is used.
+#' ##########Known frequency simulated data using basic haplotype based test##########
+#' 
+#' #Simulate haplotype structure with 500 SNPs and 5 haplotypes:
+#' hap_struc = Haplotype_sim(nsnp = 500,nhap = 5)
+#' 
+#' #Simulation of selected SNP, with 1 selected SNP private to 1 haplotype, 1 population and 0.05 selective strength:
+#' SNP_sel = benef_sim(haplotype = hap_struc, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 1)
+#' 
+#' #Simulation of haplotype trajectory, 60 generations, sequenced at every 10 timepoints, Ne of 500:
+#' hap_freq = Frequency_sim(haplotype, t = 6, tdelta = 10, benef_sim = SNP_sel,Ne = 500)[[1]]
+#' 
+#' #Computation of p-value using basic haplotype based test and omnibus p-value combination method:
+#' pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq, deltat = 10, Ne = 500, test_type = "haplotype", test_method = "base", p_combine_method = "omnibus", freq_est = "known")
+#' 
+#' ##########Known frequency simulated data using HapSNP##########
+#' 
+#' #In addition to the previous simulations, we need to compute the allele frequencies:
+#' allele_freq = hap_struc %*% hap_freq
+#' 
+#' #Computation of p-value using HapSNP and omnibus p-value combination method:
+#' pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq, allele_frequency = allele_freq, deltat = 10, Ne = 500, test_type = "haplotype", test_method = "hap_filt", p_combine_method = "omnibus", freq_est = "known")
+#' 
+#' ##########Estimated frequency simulated data using basic haplotype based test##########
+#' 
+#' #Simulation of noisy haplotype frequencies with mean samplesize 80:
+#' hap_freq_est = hap_err_sim(hap_freq, 80)
+#' 
+#' #Computation of p-value using basic haplotype based test and omnibus p-value combination method:
+#' pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq_est[[1]], coverage_matrix = hap_freq_est[[2]], deltat = 10, Ne = 500, test_type = "haplotype", test_method = "base", p_combine_method = "omnibus", freq_est = "est")
+#'
 #' @export
 
 
@@ -31,7 +64,7 @@ haplotest = function(haplotype = NULL, haplotype_frequency = NULL, allele_freque
   if (!is.null(allele_frequency)){
     #allele_frequency = allele_frequency[rowSums(haplotype)>0,]
     haplotype = haplotype[rowSums(haplotype)>0,]
-    
+
     #allele_frequency = allele_frequency[rowSums(haplotype)<ncol(haplotype),]
     haplotype = haplotype[rowSums(haplotype)<ncol(haplotype),]
   }
@@ -58,9 +91,9 @@ haplotest = function(haplotype = NULL, haplotype_frequency = NULL, allele_freque
     }else if (freq_est == "est"){
       pval_allele = adapted.cmh.test.est(freq = allele_frequency, Ne = Ne, cov = coverage_matrix[[2]], gen = seq(0,t*deltat,deltat), repli = repli)
     }
-    
+
     allele_pos = which(as.numeric(p.adjust(pval_allele, method = "BH")) < significance)
-    
+
     if (length(allele_pos) > 0){
       if (length(allele_pos) == 1){
         #if only one snp satisfy the threshold, highly unlikely
@@ -71,7 +104,7 @@ haplotest = function(haplotype = NULL, haplotype_frequency = NULL, allele_freque
       }
       #combining haplotype frequencies
       red_haplotype_frequency = hap_snp_red(red_haplotype, haplotype_frequency)
-      
+
       red_coverage = coverage_matrix[[1]][1:nrow(red_haplotype_frequency),]
       if (freq_est == "known"){
         pval = adapted.cmh.test.true(freq = red_haplotype_frequency, Ne = Ne, gen = seq(0,t*deltat, deltat), repli = repli)
@@ -80,7 +113,7 @@ haplotest = function(haplotype = NULL, haplotype_frequency = NULL, allele_freque
       }else if (freq_est == "est"){
         pval = adapted.cmh.test.est(freq = red_haplotype_frequency, Ne = Ne, cov = red_coverage, gen = seq(0,t*deltat, deltat), repli = repli)
       }
-      
+
     } else {
       if (freq_est == "known"){
         pval = adapted.cmh.test.true(freq = haplotype_frequency, Ne = Ne, gen = seq(0,t*deltat,deltat), repli = repli)
@@ -112,7 +145,7 @@ haplotest = function(haplotype = NULL, haplotype_frequency = NULL, allele_freque
         red_pvalue = adapted.cmh.test.est(freq = red_haplotype_frequency, Ne = Ne, cov = red_coverage, gen = seq(0,t*deltat, deltat), repli = repli)
       }
       pval = c(pval, p.hmp(red_pvalue+10^(-7), L = length(red_pvalue)))
-      
+
     }
   }
   if (p_combine_method == "omnibus"){

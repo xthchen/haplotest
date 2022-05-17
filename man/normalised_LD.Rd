@@ -28,3 +28,6 @@ Lewontin, R. C., (1964), The Interaction of Selection and Linkage. I. General Co
 
 Zapata, C., Alvarez, G., Carollo, C., (1997), Approximate variance of the standardized measure of gametic disequilibrium D’, American journal of human genetics 61(3): 771–774.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

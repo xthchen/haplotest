@@ -9,7 +9,7 @@
 #' @references Lewontin, R. C., (1964), The Interaction of Selection and Linkage. I. General Considerations; Heterotic Models, Genetics 49(1): 49–67.
 #' @references Zapata, C., Alvarez, G., Carollo, C., (1997), Approximate variance of the standardized measure of gametic disequilibrium D’, American journal of human genetics 61(3): 771–774.
 #' @return A numeric vector with its first element being the normalised LD, second element the estimated variance of normalised LD.
-#'
+#' @seealso [haplotest()]
 #' @export
 
 normalised_LD = function(SNP_1, SNP_2, haplotype, frequency_matrix, allele_frequency){

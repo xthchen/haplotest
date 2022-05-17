@@ -4,7 +4,7 @@
 #' @param filt_hap Numeric matrix, the filtered haplotype block set, output from MIG()
 #' 
 #' @return Numeric matrix, set of non-overlapping haplotype block location, with the first column being the starting SNP position of the candidate, and second column ending SNP position of the candidate. Each row will corresponds to a single candidate.
-#'
+#' @seealso [haplotest()]
 #' @export
 
 hap_block = function(filt_hap){

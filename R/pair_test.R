@@ -6,7 +6,7 @@
 #' @param repli Numeric, specifying the number of replicated populations.
 #' @param tdelta Numeric, number of generations between each pair of time points of interests
 #' @return A numeric vector of p-values from all the pairwise test after B&H corrections. The pairwise test is sorted such that its between haplotypes :1-2, 1-3, 1-4,...,2-3,2-4,...,3-4,...
-#'
+#' @seealso [haplotest()]
 #' @export
 
 

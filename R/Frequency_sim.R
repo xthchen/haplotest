@@ -13,6 +13,7 @@
 #' @param dec_strength Numeric, strength by which selection decreases if sel_dec=TRUE. If sel_dec = FALSE this parameter is ignored.
 #' @param repli Numeric, specifying the number of replicated populations.
 #' @return Returns a list. The first item is the haplotype frequency matrix with row being the haplotypes and columns the chosen timepoints. If replicates are present, the column will be the time points of first replicate, followed by the timepoints of second replicates etc. Second item is the fitness of haplotypes.
+#' @seealso [haplotest()]
 #' @export
 
 

@@ -17,3 +17,6 @@ A reduced haplotype frequency matrix (if haplotypes are combined due to reduced 
 \description{
 Combine haplotype frequencies according to the reduced haplotype structural matrix created through SNP based test/haplotype blocks.
 }
+\seealso{
+\code{\link[=haplotest]{haplotest()}}
+}

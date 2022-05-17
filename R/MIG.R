@@ -11,7 +11,7 @@
 #' @references Gabriel, S. B., Schaffner, S. F., Nguyen, H., Moore, J. M., Roy, J., Blumenstiel, B., Higgins, J., DeFelice, M., Lochner, A., Faggart, M., Liu-Cordero, S. N., Rotimi, C., Adeyemo, A., Cooper, R., Ward, R., Lander, E. S., Daly, M. J., Altshuler, D., (2002), The structure of haplotype blocks in the human genome, Science 296(5576): 2225–2229.
 #' @references Taliun, D., Gamper, J., Pattaro, C., (2014), Efficient haplotype block recognition of very long and dense genetic sequences, BMC bioinformatics 15: 10.
 #' @return Numeric matrix of filtered haplotype block candidates, with the first column being the starting SNP position of the candidate, and second column ending SNP position of the candidate. Each row will corresponds to a single candidate.
-#'
+#' @seealso [haplotest()]
 #' @export
 
 MIG = function(haplotype, frequency_matrix, allele_frequency, LDU = 0.98, LDL = 0.7, EHR = 0.9, d = 0.95){
