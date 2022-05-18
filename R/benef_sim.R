@@ -12,7 +12,7 @@
 #' @seealso [haplotest()]
 #' @export
 
-benef_sim = function(haplotype, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 0, repli = 1, 
+benef_sim = function(haplotype, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 0, repli = 1,
                      diff_sel_str = FALSE){
   if(is.null(haplotype)){
     warning("The haplotype structure matrix is missing. A random haplotype configuration over 1000 SNPs and 5 haplotypes is simulated")
@@ -31,7 +31,7 @@ benef_sim = function(haplotype, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 0
       return("When input a vector as the fixed/discarded number of selected haplotypes, all element in the vector must have the same sign")
     }
   }
-  
+
   nhap = ncol(haplotype)
   nsnp = nrow(haplotype)
   #one selected snp case
@@ -68,7 +68,7 @@ benef_sim = function(haplotype, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 0
       s_final = append(s_final,list(s))
       benef_all_final = append(benef_all_final, list(benef_all))
     }
-    
+
     if (diff_sel_str == FALSE){
       # exact replicate
       s_final = rep(list(s_final[[1]]), repli)
@@ -85,7 +85,8 @@ benef_sim = function(haplotype, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 0
   if (n_benef == 0){
     benef_all_final = NULL
     s_final = NULL
+    num_sel_hap = 0
   }
-  
+
   return(list(s_final,benef_all_final,num_sel_hap))
 }
