@@ -32,6 +32,11 @@ A number specifying the number of selected haplotypes.
 \description{
 This is the post-hoc test for testing for the number of selected haplotypes. The test should only be performed if haplotype based test have shown evidence of selection.
 }
+\examples{
+#We show here an example for the test for the number of selected haplotypes
+#Suppose we have the haplotype frequency matrix hap_freq, sequenced at every 10 generations, with effective population size 1000 and 3 replicate populations, using omnibus test as multiple testing correction, the number of selected haplotypes is computed by:
+hap_num = hapnumtest(hap_freq, p_combine_method = "omnibus", deltat = 10, Ne = rep(1000,3), repli = 3)
+}
 \seealso{
 \code{\link[=haplotest]{haplotest()}}
 }

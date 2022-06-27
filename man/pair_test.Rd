@@ -21,6 +21,11 @@ A numeric vector of p-values from all the pairwise test after B&H corrections. T
 \description{
 Pairwise post hoc test. Should only be used if haplotype based test have shown to be significant.
 }
+\examples{
+#We show here an example for the pairwise test for fitness differences
+#Suppose we have the haplotype frequency matrix hap_freq, sequenced at every 10 generations, with effective population size 1000 and 3 replicate populations, the number of selected haplotypes is computed by:
+pair_pval = pair_test(hap_freq, Ne = rep(1000,3), repli = 3, deltat = 10)
+}
 \seealso{
 \code{\link[=haplotest]{haplotest()}}
 }

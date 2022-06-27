@@ -21,6 +21,8 @@
 #' @references Vovk, V., Wang., R., (2018), Combining p-values via averaging, Biometrika 107(4): 791–808.
 #' @return A numeric vector of p-values from the test after multiple testing corrections.
 #'
+#'@import omnibus
+#'@import harmonicmeanp
 #' @examples
 #' #We show here examples from simulated data to p-value results of a haplotype based test.
 #' #The data simulation part can be ignored if a real data set is used.

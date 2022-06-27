@@ -1,5 +1,5 @@
 #' Apply pairwise test to all pairs of haplotypes.
-#' 
+#'
 #' Pairwise post hoc test. Should only be used if haplotype based test have shown to be significant.
 #' @param freq Numeric matrix, with each i,j element being the frequency of haplotype i at sequenced time point j.
 #' @param Ne Numeric vector with length as number of replicates, containing information of Ne (effective population size) at each replicated population. If Ne changes over time, take as input a numeric matrix, with the column being the replicate position, row being the Ne at each sequenced time points.
@@ -8,6 +8,16 @@
 #' @return A numeric vector of p-values from all the pairwise test after B&H corrections. The pairwise test is sorted such that its between haplotypes :1-2, 1-3, 1-4,...,2-3,2-4,...,3-4,...
 #' @seealso [haplotest()]
 #' @export
+#'
+#' @import omnibus
+#' @import harmonicmeanp
+#'
+#' @examples
+#' #We show here an example for the pairwise test for fitness differences
+#' #Suppose we have the haplotype frequency matrix hap_freq, sequenced at every 10 generations, with effective population size 1000 and 3 replicate populations, the number of selected haplotypes is computed by:
+#' pair_pval = pair_test(hap_freq, Ne = rep(1000,3), repli = 3, deltat = 10)
+
+
 
 
 
@@ -15,7 +25,7 @@
 pair_test = function(freq, Ne, repli, tdelta){
   nhap = nrow(freq)
   t = ncol(freq)/repli
-  
+
   pval = c()
   if (!is.matrix(Ne)){
     new_ne = matrix(rep(Ne, t), ncol = repli)

@@ -1,6 +1,6 @@
 #' Iterative testing for the number of selected haplotypes.
 #'
-#' This is the post-hoc test for testing for the number of selected haplotypes. The test should only be performed if haplotype based test have shown evidence of selection. 
+#' This is the post-hoc test for testing for the number of selected haplotypes. The test should only be performed if haplotype based test have shown evidence of selection.
 #' @param frequency_matrix Numeric matrix, with each i,j element being the frequency of haplotype i at sequenced time point j.
 #' @param deltat Numeric, number of generations between each pair of time points of interests
 #' @param Ne Numeric vector with length as number of replicates, containing information of Ne (effective population size) at each replicated population. If Ne changes over time, take as input a numeric matrix, with the column being the replicate position, row being the Ne at each sequenced time points.
@@ -10,10 +10,18 @@
 #' @return A number specifying the number of selected haplotypes.
 #' @seealso [haplotest()]
 #' @export
+#'
+#' @import omnibus
+#' @import harmonicmeanp
+#'
+#' @examples
+#' #We show here an example for the test for the number of selected haplotypes
+#' #Suppose we have the haplotype frequency matrix hap_freq, sequenced at every 10 generations, with effective population size 1000 and 3 replicate populations, using omnibus test as multiple testing correction, the number of selected haplotypes is computed by:
+#' hap_num = hapnumtest(hap_freq, p_combine_method = "omnibus", deltat = 10, Ne = rep(1000,3), repli = 3)
 
 
 
-hapnumtest = function(frequency_matrix, p_combine_method = "omnibus", deltat = 10, Ne = 1000, 
+hapnumtest = function(frequency_matrix, p_combine_method = "omnibus", deltat = 10, Ne = 1000,
                       repli = 1, seed = 2022){
   set.seed(seed)
   t = (ncol(frequency_matrix)/repli)
@@ -38,14 +46,14 @@ hapnumtest = function(frequency_matrix, p_combine_method = "omnibus", deltat = 1
         f_T = nrm_fq[,t_T]
         #harmonic means
         hm_Ne = floor(2/(1/new_ne[-length(new_ne[,z]),z]+1/new_ne[-1,z]))
-        
+
         diff = f_T - f_0
         drift = rowSums(nrm_fq[,(repli_gen[z]:(t_T-1))]*(1-nrm_fq[,(repli_gen[z]:(t_T-1))])*
                           matrix(rep(1-(1-1/hm_Ne)^(gen[-1]-gen[-t]),nrow(nrm_fq)), nrow = nrow(nrm_fq), byrow = TRUE))
         max_diff_repli = max_diff_repli + diff/sqrt(drift)
       }
       freq_mod = nrm_fq[-which.max(max_diff_repli),]
-      
+
       tot_ne = c()
       for(z in 1:repli){
         ne_hold = c()
@@ -56,8 +64,8 @@ hapnumtest = function(frequency_matrix, p_combine_method = "omnibus", deltat = 1
       }
       new_ne = tot_ne
       #new ne after frequency removal
-      
-      
+
+
       for (x in 1:ncol(freq_mod)){
         if (sum(freq_mod[,x]) == 0){
           freq_mod[,x] = rep(1/nrow(freq_mod), nrow(freq_mod))
@@ -66,7 +74,7 @@ hapnumtest = function(frequency_matrix, p_combine_method = "omnibus", deltat = 1
         }
       }
       #normalisation of frequencies after removal
-      
+
       nrm_fq = freq_mod
       for(z in 1:repli){
         for(v in 1:t)
