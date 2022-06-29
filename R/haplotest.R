@@ -35,7 +35,7 @@
 #' SNP_sel = benef_sim(haplotype = hap_struc, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 1)
 #'
 #' #Simulation of haplotype trajectory, 60 generations, sequenced at every 10 timepoints, Ne of 500:
-#' hap_freq = Frequency_sim(haplotype, t = 6, tdelta = 10, benef_sim = SNP_sel,Ne = 500)[[1]]
+#' hap_freq = Frequency_sim(haplotype = hap_struc, t = 6, tdelta = 10, benef_sim = SNP_sel,Ne = 500)[[1]]
 #'
 #' #Computation of p-value using basic haplotype based test and omnibus p-value combination method:
 #' pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq, deltat = 10, Ne = 500, test_type = "haplotype", test_method = "base", p_combine_method = "omnibus", freq_est = "known")
@@ -62,6 +62,41 @@
 
 haplotest = function(haplotype = NULL, haplotype_frequency = NULL, allele_frequency = NULL, coverage_matrix = NULL, deltat = 10, Ne = 1000, repli = 1, test_type = "haplotype",
                          test_method = "base", p_combine_method = "omnibus", freq_est = "known",significance = 0.05, seed = 2021){
+
+  if (p_combine_method != "omnibus" & p_combine_method != "harmonic" & p_combine_method != "vovk" & p_combine_method != "bonferroni" & p_combine_method != "BH"){
+    return ("The given multiple testing method is not available for this function")
+  }else if (test_method == "base" & freq_est == "half"){
+    if (test_type == "haplotype"){
+      if (ncol(haplotype_frequency) != ncol(coverage_matrix)){
+        return("The haplotype frequency matrix have different dimensions then the sample size matrix")
+      }else if (nrow(haplotype_frequency) != nrow(coverage_matrix)){
+        return("The haplotype frequency matrix have different dimensions then the sample size matrix")
+      }
+    }
+  }else if (test_method == "base" & freq_est == "est"){
+    if (test_type == "haplotype"){
+      if (ncol(haplotype_frequency) != ncol(coverage_matrix)){
+        return("The haplotype frequency matrix have different dimensions then the sample size matrix")
+      }else if (nrow(haplotype_frequency) != nrow(coverage_matrix)){
+        return("The haplotype frequency matrix have different dimensions then the sample size matrix")
+      }
+    }
+  }else if (test_type == "haplotype"){
+    if (is.null(haplotype_frequency)){
+      return("The frequency matrix of the chosen test_type is missing")
+    } else if (test_method != "base" & test_method != "hap_filt" & test_method != "hap_block"){
+      return("The chosen test_method is not available")
+    }
+  }else if (test_type == "allele"){
+    if (is.null(allele_frequency)){
+      return("The frequency matrix of the chosen test_type is missing")
+    }else if (test_method != "base"){
+      return ("The chosen test_method is not available")
+    }
+  }else if (test_type != "haplotype" & test_type != "allele"){
+    return("The chosen test_type is not available")
+  }
+
   set.seed(seed)
   if (!is.null(allele_frequency) & !is.null(haplotype)){
     allele_frequency = allele_frequency[rowSums(allele_frequency)>0,]

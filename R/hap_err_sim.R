@@ -15,8 +15,10 @@ hap_err_sim = function(freq, samsize){
   freq_err = c()
   for (i in 1:ncol(freq)){
     freq_err = cbind(freq_err, rmultinom(n=1, size = samsize[i],prob = freq[,i])/samsize[i])
-    #freq_err = cbind(freq_err, rowSums(rmultinom(n=ncol(freq), size = samsize[i],prob = freq[,i])/samsize[i])/ncol(freq))
 
+  }
+  if (!is.matrix(samsize)){
+    samsize = matrix(rep(samsize, nrow(freq)), ncol = ncol(freq), byrow = TRUE)
   }
   return(list(freq_err, samsize))
 }

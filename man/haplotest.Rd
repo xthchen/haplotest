@@ -65,7 +65,7 @@ hap_struc = Haplotype_sim(nsnp = 500,nhap = 5)
 SNP_sel = benef_sim(haplotype = hap_struc, n_benef = 1, min = 0.05, max = 0.05, fix_sel = 1)
 
 #Simulation of haplotype trajectory, 60 generations, sequenced at every 10 timepoints, Ne of 500:
-hap_freq = Frequency_sim(haplotype, t = 6, tdelta = 10, benef_sim = SNP_sel,Ne = 500)[[1]]
+hap_freq = Frequency_sim(haplotype = hap_struc, t = 6, tdelta = 10, benef_sim = SNP_sel,Ne = 500)[[1]]
 
 #Computation of p-value using basic haplotype based test and omnibus p-value combination method:
 pval = haplotest(haplotype = hap_struc, haplotype_frequency = hap_freq, deltat = 10, Ne = 500, test_type = "haplotype", test_method = "base", p_combine_method = "omnibus", freq_est = "known")
