@@ -32,6 +32,7 @@ hapnumtest = function(frequency_matrix, p_combine_method = "omnibus", deltat = 1
   }else{
     new_ne = Ne
   }
+  gen = seq(0,t*deltat,deltat)
   repli_gen = seq(1,repli*t,t)
   pval = 0
   curr_sel = 1
