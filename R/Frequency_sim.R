@@ -1,5 +1,5 @@
 #' Simulation of haploid haplotype frequencies over time.
-#' 
+#'
 #' Simulation of haplotype frequencies over time using a multinomial distribution. Simulations can be run with or without replicated populations, and for constant or changing selection over time. Frequencies are recorded at time points provided in the input data.
 #' @param haplotype Binary numeric matrix containing information of haplotype structure. The columns corresponds to the haplotypes and the rows to the SNPs.
 #' @param t Numeric, number of time points of interest, excluding the initial time point
@@ -66,11 +66,11 @@ Frequency_sim = function(haplotype, t = 6, tdelta = 10, benef_sim, rand_start = 
         freq = freq*fitness
       }
       # apply drift
-      if (!is.na(Ne))
+      if (any(!is.na(Ne))){
         #as long as effective population size is present
-        freq = rmultinom(1, Ne, freq)/Ne
+        freq = rmultinom(1, Ne, freq)/Ne}
       #frequency follows a multinomial distribution
-      
+
       if (ti %in% timepoints){
         freq_matrix[,(ti/tdelta+1)+(t+1)*(k-1)] = freq
         if (sel_dec == TRUE){
@@ -82,6 +82,6 @@ Frequency_sim = function(haplotype, t = 6, tdelta = 10, benef_sim, rand_start = 
     }
     total_fitness = rbind(total_fitness, fitness)
   }
-  
+
   return(list(freq_matrix, total_fitness))
 }

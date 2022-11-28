@@ -47,8 +47,9 @@ hapnumtest = function(frequency_matrix, p_combine_method = "omnibus", deltat = 1
         f_T = nrm_fq[,t_T]
         #harmonic means
         hm_Ne = floor(2/(1/new_ne[-length(new_ne[,z]),z]+1/new_ne[-1,z]))
-        hm_Ne = hm_Ne[repli_gen[z]:(repli_gen[z]+t-2)]
-
+        if (curr_sel == 1){
+          hm_Ne = hm_Ne[repli_gen_hm[z]:(repli_gen_hm[z]+t-2)]
+        }
         diff = f_T - f_0
         drift = rowSums(nrm_fq[,(repli_gen[z]:(t_T-1))]*(1-nrm_fq[,(repli_gen[z]:(t_T-1))])*
                           matrix(rep(1-(1-1/hm_Ne)^(gen[-1]-gen[-t]),nrow(nrm_fq)), nrow = nrow(nrm_fq), byrow = TRUE))
